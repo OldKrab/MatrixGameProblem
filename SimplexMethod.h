@@ -6,11 +6,10 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
 
 typedef double db;
-typedef vector<db> dvector;
-typedef vector<dvector> dmatrix;
+typedef std::vector<db> dvector;
+typedef std::vector<dvector> dmatrix;
 
 struct SimplexModel {
     dvector c, b;
@@ -30,7 +29,7 @@ public:
     SimplexAnswer Solve() {
         ConvertModelToTable();
 
-        vector<int> main_basis(m - 1), not_main_basis(n - 1);
+        std::vector<int> main_basis(m - 1), not_main_basis(n - 1);
         for (auto i = 0; i < n - 1; ++i)
             not_main_basis[i] = i;
         for (auto i = n - 1; i < n + m - 2; ++i)
@@ -42,7 +41,7 @@ public:
 
         while (k != -1 && r != -1) {
             // k-th column, r-th row are permissive
-            swap(main_basis[r - 1], not_main_basis[k - 1]);
+            std::swap(main_basis[r - 1], not_main_basis[k - 1]);
             // Modify permissive element
             table[r][k] = 1. / table[r][k];
             // Modify permissive column
