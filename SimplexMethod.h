@@ -1,3 +1,6 @@
+#ifndef MATRIXGAMEPROBLEM_SIMPLEXMETHOD_H
+#define MATRIXGAMEPROBLEM_SIMPLEXMETHOD_H
+
 #include <cfloat>
 #include <fstream>
 #include <iostream>
@@ -69,7 +72,6 @@ public:
 
 
 private:
-    /// Получить разрешающий столбец
     int GetPermissiveCol() {
         int col = -1;
         db mn = 0;
@@ -109,3 +111,5 @@ private:
     dmatrix table;
     int n = 0, m = 0;
 };
+
+#endif //MATRIXGAMEPROBLEM_SIMPLEXMETHOD_H
