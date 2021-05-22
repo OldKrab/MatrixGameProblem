@@ -3,4 +3,4 @@ project(MatrixGameProblem)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(MatrixGameProblem main.cpp NaturalSimplex.cpp)
+add_executable(MatrixGameProblem main.cpp SimplexMethod.cpp)
