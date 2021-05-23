@@ -18,12 +18,15 @@ struct SimplexModel {
 };
 
 struct SimplexResult {
-    dvector x;
-    db f;
+    dvector x, c;
 };
 
-std::ostream &operator<<(std::ostream &out, const SimplexResult  &result) {
-    out << "F = " << result.f << std::endl << "X = { ";
+std::ostream &operator<<(std::ostream &out, const SimplexResult &result) {
+    out << "F = " << result.c[0];
+    for (int i = 1; i < result.c.size(); i++)
+        if (result.c[i] != 0)
+            out << " + " << result.c[i] << "*x" << i + 1;
+    out << "\nX = { ";
     for (auto el:result.x)
         out << el << ' ';
     out << "}";
@@ -70,10 +73,14 @@ public:
             if (k != -1) r = GetPermissiveRow(k);
         }
 
-        SimplexResult sa{dvector(n + m - 2)};
-        for (int i = 0; i < m - 1; i++)
+        SimplexResult sa{dvector(n + m - 2), dvector(n + m - 2)};
+        for (int i = 0; i < m - 1; i++) {
             sa.x[main_basis[i]] = table[i + 1][0];
-        sa.f = table[0][0];
+        }
+        sa.c[0] = table[0][0];
+        for (int i = 0; i < n - 1; i++) {
+            sa.c[not_main_basis[i]] = table[0][i+1];
+        }
         return sa;
     }
 
