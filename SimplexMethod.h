@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <iomanip>
 
 
 typedef double db;
@@ -12,13 +13,13 @@ typedef std::vector<db> dvector;
 typedef std::vector<dvector> dmatrix;
 
 std::ostream &operator<<(std::ostream &out, const dvector &v) {
-    for(auto el:v)
-        out << el << ' ';
+    for (auto el:v)
+        out << std::setw(5) << el << ' ';
     return out;
 }
 
-dvector operator*(dvector v, db num){
-    for(auto & i : v)
+dvector operator*(dvector v, db num) {
+    for (auto &i : v)
         i *= num;
     return v;
 }
@@ -91,7 +92,7 @@ public:
         }
         sa.c[0] = table[0][0];
         for (int i = 0; i < n - 1; i++) {
-            sa.c[not_main_basis[i]+1] = table[0][i+1];
+            sa.c[not_main_basis[i] + 1] = table[0][i + 1];
         }
         return sa;
     }

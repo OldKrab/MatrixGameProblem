@@ -52,10 +52,12 @@ int main() {
     auto model = ConvertToSimplexModel(matrix);         // For B player
     auto simplexMethod = SimpexMethod(model);
     auto result = simplexMethod.Solve();
-    std::cout << result << std::endl;
     auto ax = GetDualSolution(result, model.c.size() - 1);  // A player's variables
     auto v = 1 / result.c[0];                           // Game cost
     auto p = GetProbabilities(ax, v, model.b.size());
     auto q = GetProbabilities(result.x, v, model.c.size() - 1);
-    std::cout << p << std::endl << q;
+
+    std::cout << "Game Cost = " << v << std::endl <<
+    "p = { " << p << "}\n" <<
+    "q = { " << q << "}\n";
 }
