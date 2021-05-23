@@ -1,6 +1,7 @@
 #include <iostream>
 #include "SimplexMethod.h"
 #include "MatrixGameResult.h"
+#include "IterationMethod.h"
 
 std::string GetInputFileName() {
     static std::string fileName = R"(D:\GoogleDrive\sync\source\clion\MatrixGameProblem\input.txt)";
@@ -55,7 +56,14 @@ int main() {
     auto v = 1 / result.c[0];                           // Game cost
     auto p = GetProbabilities(ax, v, model.b.size());
     auto q = GetProbabilities(result.x, v, model.c.size() - 1);
-    auto ResWithSimplex = MatrixGameResult{v,p,q};
+    auto resWithSimplex = MatrixGameResult{v, p, q};
+
+    auto iterationMethod = IterationMethod(matrix);
+    auto resWithIteration = iterationMethod.Solve(1e-7);
+
+    std::cout << "Simplex Method:\n" << resWithSimplex << std::endl <<
+              "Iteration Method:\nIteration Count: " << iterationMethod.GetIterationCount() << std::endl <<
+              resWithIteration << std::endl;
 
 
 }
