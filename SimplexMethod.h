@@ -6,23 +6,11 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
+#include "matrix.h"
 
 
-typedef double db;
-typedef std::vector<db> dvector;
-typedef std::vector<dvector> dmatrix;
 
-std::ostream &operator<<(std::ostream &out, const dvector &v) {
-    for (auto el:v)
-        out << std::setw(5) << el << ' ';
-    return out;
-}
 
-dvector operator*(dvector v, db num) {
-    for (auto &i : v)
-        i *= num;
-    return v;
-}
 
 struct SimplexModel {
     dvector c, b;

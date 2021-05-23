@@ -3,44 +3,38 @@
 #include <iostream>
 #include <iomanip>
 
-using namespace std;
 
 typedef  double db;
-typedef vector<db> dvector;
-typedef vector<dvector> dmatrix;
+typedef std::vector<db> dvector;
+typedef std::vector<dvector> dmatrix;
 
 
-// Вывести вектор
 template <class T>
-ostream& operator<<(ostream& out, const vector<T>& v)
+std::ostream& operator<<(std::ostream& out, const std::vector<T>& v)
 {
     for (double el : v) {
-        out << right << setw(8) << el << ' ';
+        out << std::right << std::setw(8) << el << ' ';
     }
     return out;
 }
 
-// Сложение векторов
 template <class T>
-dvector operator+(const vector<T>& a, const vector<T>& b)
+dvector operator+(std::vector<T>v, const std::vector<T>& b)
 {
-    dvector res = a;
-    for (int i = 0; i < a.size(); i++)
-        res[i] += b[i];
-    return res;
+    for (int i = 0; i < v.size(); i++)
+        v[i] += b[i];
+    return v;
 }
 
-// Умножение вектора на число
-dvector operator*(const dvector& a, const db num)
-{
-    dvector res = a;
-    for (int i = 0; i < a.size(); i++)
-        res[i] *= num;
-    return res;
+template<class T>
+dvector operator*(std::vector<T> v, db num) {
+    for (auto &i : v)
+        i *= num;
+    return v;
 }
 
-// Умножение матрицы на вектор
-dvector operator*(const dmatrix& a, const dvector& x)
+template<class T>
+dvector operator*(const std::vector<std::vector<T>>& a, const std::vector<T>& x)
 {
     int m = a.size();
     dvector r(m, 0);
@@ -50,8 +44,8 @@ dvector operator*(const dmatrix& a, const dvector& x)
     return r;
 }
 
-// Умножение матрицы на другую матрицу
-dmatrix operator*(const dmatrix& a, const dmatrix& b)
+template<class T>
+dmatrix operator*(const std::vector<std::vector<T>>& a, const std::vector<std::vector<T>>& b)
 {
     dmatrix res(a.size(), dvector(b[0].size(), 0));
     for (int i = 0; i < a.size(); i++)
