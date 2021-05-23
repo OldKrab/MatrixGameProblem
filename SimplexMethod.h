@@ -17,6 +17,12 @@ std::ostream &operator<<(std::ostream &out, const dvector &v) {
     return out;
 }
 
+dvector operator*(dvector v, db num){
+    for(auto & i : v)
+        i *= num;
+    return v;
+}
+
 struct SimplexModel {
     dvector c, b;
     dmatrix a;
