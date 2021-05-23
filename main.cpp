@@ -7,6 +7,16 @@ std::string GetInputFileName() {
     return fileName;
 }
 
+SimplexModel ConvertToSimplexModel(const dmatrix& matrix){
+    SimplexModel model;
+    model.isMax = true;
+    model.a = matrix;
+    model.c.resize(matrix[0].size()+1, 1);
+    model.c[0] = 0;
+    model.b.resize(matrix.size(), 1);
+    return model;
+}
+
 dmatrix Input() {
     std::ifstream fin(GetInputFileName());
     int m, n;
