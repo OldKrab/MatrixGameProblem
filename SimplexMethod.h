@@ -34,9 +34,9 @@ std::ostream &operator<<(std::ostream &out, const SimplexResult &result) {
     return out;
 }
 
-class SimpexMethod {
+class SimplexMethod {
 public:
-    explicit SimpexMethod(SimplexModel sm) : sm(std::move(sm)) {}
+    explicit SimplexMethod(SimplexModel sm) : sm(std::move(sm)) {}
 
     SimplexResult Solve() {
         ConvertModelToTable();

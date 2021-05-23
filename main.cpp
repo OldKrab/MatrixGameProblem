@@ -1,7 +1,6 @@
 #include <iostream>
-#include <fstream>
-#include <exception>
 #include "SimplexMethod.h"
+#include "MatrixGameResult.h"
 
 std::string GetInputFileName() {
     static std::string fileName = R"(D:\GoogleDrive\sync\source\clion\MatrixGameProblem\input.txt)";
@@ -50,14 +49,13 @@ dvector GetProbabilities(dvector x, db v, int n) {
 int main() {
     auto matrix = Input();
     auto model = ConvertToSimplexModel(matrix);         // For B player
-    auto simplexMethod = SimpexMethod(model);
+    auto simplexMethod = SimplexMethod(model);
     auto result = simplexMethod.Solve();
     auto ax = GetDualSolution(result, model.c.size() - 1);  // A player's variables
     auto v = 1 / result.c[0];                           // Game cost
     auto p = GetProbabilities(ax, v, model.b.size());
     auto q = GetProbabilities(result.x, v, model.c.size() - 1);
+    auto ResWithSimplex = MatrixGameResult{v,p,q};
 
-    std::cout << "Game Cost = " << v << std::endl <<
-    "p = { " << p << "}\n" <<
-    "q = { " << q << "}\n";
+
 }
