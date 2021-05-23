@@ -31,10 +31,22 @@ dmatrix Input() {
     return matrix;
 }
 
+dvector GetDualSolution(const SimplexResult &res, int n) {
+    int m = res.x.size() - n;
+    auto y = dvector(n+m);
+    for(int i = 1; i <= n; i++)
+        y[m+i-1] = res.c[i];
+    for(int i = n+1; i <= n+m; i++)
+        y[i-n-1] = res.c[i];
+    return y;
+}
+
 int main() {
     auto matrix = Input();
     auto model = ConvertToSimplexModel(matrix);
     auto simplexMethod = SimpexMethod(model);
     auto result = simplexMethod.Solve();
-    std::cout << result;
+    std::cout << result << std::endl;
+    auto y = GetDualSolution(result, model.c.size()-1);
+    std::cout << y;
 }
