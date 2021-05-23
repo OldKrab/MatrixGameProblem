@@ -17,16 +17,24 @@ struct SimplexModel {
     bool isMax = false;
 };
 
-struct SimplexAnswer {
+struct SimplexResult {
     dvector x;
     db f;
 };
 
+std::ostream &operator<<(std::ostream &out, const SimplexResult  &result) {
+    out << "F = " << result.f << std::endl << "X = { ";
+    for (auto el:result.x)
+        out << el << ' ';
+    out << "}";
+    return out;
+}
+
 class SimpexMethod {
 public:
-    SimpexMethod(SimplexModel sm) : sm(std::move(sm)) {}
+    explicit SimpexMethod(SimplexModel sm) : sm(std::move(sm)) {}
 
-    SimplexAnswer Solve() {
+    SimplexResult Solve() {
         ConvertModelToTable();
 
         std::vector<int> main_basis(m - 1), not_main_basis(n - 1);
@@ -62,7 +70,7 @@ public:
             if (k != -1) r = GetPermissiveRow(k);
         }
 
-        SimplexAnswer sa{dvector(n + m - 2)};
+        SimplexResult sa{dvector(n + m - 2)};
         for (int i = 0; i < m - 1; i++)
             sa.x[main_basis[i]] = table[i + 1][0];
         sa.f = table[0][0];
@@ -94,7 +102,7 @@ private:
     }
 
     dmatrix ConvertModelToTable() {
-        m = (int)sm.b.size() + 1, n = (int)sm.c.size();
+        m = (int) sm.b.size() + 1, n = (int) sm.c.size();
         table.resize(m, dvector(n));
         for (int j = 0; j < n; j++)
             table[0][j] = -sm.c[j] * sm.isMax;

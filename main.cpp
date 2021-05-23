@@ -33,4 +33,8 @@ dmatrix Input() {
 
 int main() {
     auto matrix = Input();
+    auto model = ConvertToSimplexModel(matrix);
+    auto simplexMethod = SimpexMethod(model);
+    auto result = simplexMethod.Solve();
+    std::cout << result;
 }
