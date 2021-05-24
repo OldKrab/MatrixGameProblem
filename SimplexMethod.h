@@ -16,6 +16,12 @@ struct SimplexModel {
     dvector c, b;
     dmatrix a;
     bool isMax = false;
+
+    void AddDelta(db delta){
+        c = c + delta;
+        b = b + delta;
+        a = a + delta;
+    }
 };
 
 struct SimplexResult {
@@ -113,7 +119,7 @@ private:
         m = (int) sm.b.size() + 1, n = (int) sm.c.size();
         table.resize(m, dvector(n));
         for (int j = 0; j < n; j++)
-            table[0][j] = -sm.c[j] * sm.isMax;
+            table[0][j] = -sm.c[j] * (sm.isMax?1:-1);
         for (int i = 1; i < m; i++)
             table[i][0] = sm.b[i - 1];
         for (int i = 1; i < m; i++)

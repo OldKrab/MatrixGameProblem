@@ -6,6 +6,11 @@
 struct MatrixGameResult {
     db v = 0;
     dvector p, q;
+
+    void AddDelta(db delta)
+    {
+        v += delta;
+    }
 };
 
 std::ostream &operator<<(std::ostream &out, const MatrixGameResult &res) {

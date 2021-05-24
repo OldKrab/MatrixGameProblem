@@ -49,6 +49,9 @@ dvector GetProbabilities(dvector x, db v, int n) {
 
 int main() {
     auto matrix = Input();
+    auto delta = GetMin(matrix);
+    if(delta < 0)
+        matrix = matrix + -delta;
     auto model = ConvertToSimplexModel(matrix);         // For B player
     auto simplexMethod = SimplexMethod(model);
     auto result = simplexMethod.Solve();
@@ -59,10 +62,17 @@ int main() {
     auto resWithSimplex = MatrixGameResult{v, p, q};
 
     auto iterationMethod = IterationMethod(matrix);
-    auto resWithIteration = iterationMethod.Solve(1e-7);
+    auto eps  = 1e-3;
+    auto resWithIteration = iterationMethod.Solve(eps);
+
+    if(delta < 0){
+        resWithSimplex.AddDelta(delta);
+        resWithIteration.AddDelta(delta);
+    }
 
     std::cout << "Simplex Method:\n" << resWithSimplex << std::endl <<
               "Iteration Method:\nIteration Count: " << iterationMethod.GetIterationCount() << std::endl <<
+              "Eps = " << eps << std::endl <<
               resWithIteration << std::endl;
 
 
